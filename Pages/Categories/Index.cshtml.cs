@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Aron_Simina_Lab2.Data;
 using Aron_Simina_Lab2.Models;
 
-namespace Aron_Simina_Lab2.Pages.Books
+namespace Aron_Simina_Lab2.Pages.Categories
 {
     public class IndexModel : PageModel
     {
@@ -19,15 +19,13 @@ namespace Aron_Simina_Lab2.Pages.Books
             _context = context;
         }
 
-        public IList<Book> Book { get; set; } = default!;
+        public IList<Category> Category { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Book != null)
+            if (_context.Category != null)
             {
-                Book = await _context.Book
-                    .Include(b => b.Publisher)
-                    .ToListAsync();
+                Category = await _context.Category.ToListAsync();
             }
         }
     }

@@ -26,6 +26,7 @@ namespace Aron_Simina_Lab2.Pages.Books
                "PublisherName");
                 return Page();
             }
+        }
 
             [BindProperty]
 
@@ -47,4 +48,4 @@ namespace Aron_Simina_Lab2.Pages.Books
             }
         }
     }
-}
+

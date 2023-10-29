@@ -8,11 +8,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Aron_Simina_Lab2.Data;
 using Aron_Simina_Lab2.Models;
-using Aron_Simina_Lab2.Models;
 
-namespace Aron_Simina_Lab2.Pages.Books
+namespace Aron_Simina_Lab2.Pages.Categories
 {
-    public class EditModel : BookCategoriesPageModel
+    public class EditModel : PageModel
     {
         private readonly Aron_Simina_Lab2.Data.Aron_Simina_Lab2Context _context;
 
@@ -22,24 +21,21 @@ namespace Aron_Simina_Lab2.Pages.Books
         }
 
         [BindProperty]
-        public Book Book { get; set; } = default!;
+        public Category Category { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Book == null)
+            if (id == null || _context.Category == null)
             {
                 return NotFound();
             }
 
-            var book =  await _context.Book.FirstOrDefaultAsync(m => m.ID == id);
-            if (book == null)
+            var category =  await _context.Category.FirstOrDefaultAsync(m => m.ID == id);
+            if (category == null)
             {
                 return NotFound();
             }
-
-            Book = book;
-            ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID",
-"PublisherName");
+            Category = category;
             return Page();
         }
 
@@ -52,7 +48,7 @@ namespace Aron_Simina_Lab2.Pages.Books
                 return Page();
             }
 
-            _context.Attach(Book).State = EntityState.Modified;
+            _context.Attach(Category).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +56,7 @@ namespace Aron_Simina_Lab2.Pages.Books
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BookExists(Book.ID))
+                if (!CategoryExists(Category.ID))
                 {
                     return NotFound();
                 }
@@ -73,9 +69,9 @@ namespace Aron_Simina_Lab2.Pages.Books
             return RedirectToPage("./Index");
         }
 
-        private bool BookExists(int id)
+        private bool CategoryExists(int id)
         {
-          return (_context.Book?.Any(e => e.ID == id)).GetValueOrDefault();
+          return (_context.Category?.Any(e => e.ID == id)).GetValueOrDefault();
         }
     }
 }
